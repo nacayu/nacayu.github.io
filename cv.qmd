@@ -1,0 +1,27 @@
+---
+title: "CV"
+---
+
+# Curriculum Vitae
+
+## Zedong Yu (于泽东)
+
+📍 Shanghai | 📧 your.email@example.com | 🔗 [GitHub](https://github.com/nacayu)
+
+---
+
+## Education
+
+*Coming soon...*
+
+---
+
+## Experience
+
+*Coming soon...*
+
+---
+
+## Publications
+
+*Coming soon...*

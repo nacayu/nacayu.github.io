@@ -1,0 +1,9 @@
+---
+title: "Blog"
+---
+
+# Blog Posts
+
+Here will be my learning notes and thoughts.
+
+*Coming soon...*

@@ -1,0 +1,15 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Zedong Yu"
+  description: "Personal website"
+  navbar:
+    right:
+      - text: "About"
+        href: about.qmd
+      - text: "Blog"
+        href: blog/index.qmd
+      - text: "CV"
+        href: cv.qmd

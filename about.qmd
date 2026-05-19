@@ -1,0 +1,20 @@
+---
+title: "About Me"
+---
+
+# About Me
+
+**Zedong Yu (于泽东)**
+
+- 📍 Shanghai
+- 💼 AD perception → AD World model & LLM agents & VLM
+- 🔗 [GitHub](https://github.com/nacayu)
+- 📧 Email: your.email@example.com
+
+## Background
+
+I am a researcher focused on Autonomous Driving perception, now transitioning to:
+
+- AD World Model
+- LLM Agents
+- Vision Language Models (VLM)
