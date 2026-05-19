@@ -6,191 +6,364 @@
 <title>设计评审报告 - nacayu-wiki 个人知识管理系统</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
-.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+:root { --bg: #0f172a; --bg2: #1e293b; --border: #334155; --text: #e2e8f0; --text-dim: #94a3b8; --muted: #64748b; --green: #4ade80; --yellow: #facc15; --red: #f87171; --blue: #3b82f6; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 2rem; }
 
 /* Cover */
-.cover { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 16px; margin-bottom: 2rem; }
-.cover h1 { font-size: 2.5rem; color: #f8fafc; margin-bottom: 0.5rem; }
-.cover .subtitle { font-size: 1.25rem; color: #94a3b8; margin-bottom: 2rem; }
-.cover .meta { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; font-size: 0.9rem; color: #64748b; }
-.cover .badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; }
+.cover { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 16px; margin-bottom: 2rem; position: relative; overflow: hidden; }
+.cover::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 50%); }
+.cover h1 { font-size: 3rem; color: #f8fafc; margin-bottom: 0.5rem; position: relative; }
+.cover .subtitle { font-size: 1.5rem; color: var(--text-dim); margin-bottom: 2rem; position: relative; }
+.cover .meta { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); position: relative; }
+.cover .badge { display: inline-block; padding: 0.5rem 1.5rem; border-radius: 20px; font-weight: 600; }
 .badge-approved { background: #166534; color: #bbf7d0; }
 .badge-review { background: #854d0e; color: #fef08a; }
+.verdict { margin-top: 2rem; padding: 1rem 2rem; background: rgba(22,101,52,0.3); border-radius: 8px; display: inline-block; }
+.verdict h3 { color: var(--green); margin-bottom: 0.5rem; }
 
 /* Dashboard */
-.dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-.metric-card { background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; }
-.metric-card .label { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
-.metric-card .value { font-size: 2rem; font-weight: 700; }
-.metric-card .value.green { color: #4ade80; }
-.metric-card .value.yellow { color: #facc15; }
-.metric-card .value.red { color: #f87171; }
+.dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.metric-card { background: var(--bg2); border-radius: 12px; padding: 1.5rem; border: 1px solid var(--border); position: relative; overflow: hidden; }
+.metric-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.metric-card.green::before { background: var(--green); }
+.metric-card.yellow::before { background: var(--yellow); }
+.metric-card.red::before { background: var(--red); }
+.metric-card .label { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.metric-card .value { font-size: 2.5rem; font-weight: 700; }
+.metric-card .value.green { color: var(--green); }
+.metric-card .value.yellow { color: var(--yellow); }
+.metric-card .value.red { color: var(--red); }
+.metric-card .detail { font-size: 0.85rem; color: var(--text-dim); margin-top: 0.5rem; }
+.metric-card .score-bar { height: 6px; background: var(--border); border-radius: 3px; margin-top: 0.75rem; overflow: hidden; }
+.metric-card .score-bar-fill { height: 100%; border-radius: 3px; }
 
 /* Section */
-.section { background: #1e293b; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid #334155; }
-.section h2 { font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #3b82f6; }
-.section h3 { font-size: 1rem; color: #94a3b8; margin: 1.5rem 0 0.75rem; }
+.section { background: var(--bg2); border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid var(--border); }
+.section h2 { font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--blue); display: flex; align-items: center; gap: 0.5rem; }
+.section h2 .num { background: var(--blue); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+.section h3 { font-size: 1rem; color: var(--text-dim); margin: 1.5rem 0 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.section h3::before { content: '▸'; color: var(--blue); }
 
-/* Architecture Diagram */
-.architecture { background: #0f172a; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
-.arch-layer { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.arch-box { flex: 1; min-width: 200px; background: #1e293b; border-radius: 8px; padding: 1rem; border-left: 4px solid; }
-.arch-box.public { border-color: #4ade80; }
-.arch-box.private { border-color: #f87171; }
-.arch-box h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
-.arch-box p { font-size: 0.8rem; color: #64748b; }
-.arch-box .status { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-top: 0.5rem; }
-.status-yes { background: #166534; color: #bbf7d0; }
-.status-no { background: #991b1b; color: #fecaca; }
+/* Architecture Diagram - SVG */
+.architecture-svg { background: var(--bg); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; overflow-x: auto; }
+.svg-container { width: 100%; min-height: 400px; }
 
-/* Directory Structure */
-.dirs { background: #0f172a; border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.85rem; }
-.dirs .file { padding: 0.25rem 0; }
-.dirs .file.public { color: #4ade80; }
-.dirs .file.private { color: #f87171; }
-.dirs .file.meta { color: #60a5fa; }
-.dirs .indent { margin-left: 1.5rem; border-left: 2px solid #334155; padding-left: 0.5rem; }
+/* Directory Tree */
+.dirs { background: var(--bg); border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.8rem; line-height: 1.8; }
+.dirs .line { padding: 0.1rem 0; display: flex; align-items: center; }
+.dirs .line::before { content: '│ '; color: var(--border); }
+.dirs .line:last-child::before { content: '└ '; color: var(--border); }
+.dirs .public { color: var(--green); }
+.dirs .private { color: var(--red); }
+.dirs .meta { color: var(--blue); }
+.dirs .comment { color: var(--muted); font-style: italic; }
 
 /* Table */
 table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
-th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
-th { background: #0f172a; color: #94a3b8; font-weight: 600; font-size: 0.85rem; }
-tr:hover { background: #334155; }
+th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+th { background: var(--bg); color: var(--text-dim); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+tr:hover { background: rgba(51,65,85,0.3); }
+td { font-size: 0.95rem; }
 
 /* Badges */
-.badge-p0 { background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
-.badge-p1 { background: #ea580c; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
-.badge-p2 { background: #ca8a04; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
-.badge-done { background: #166534; color: #bbf7d0; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
-.badge-pending { background: #854d0e; color: #fef08a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+.badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+.badge-p0 { background: #dc2626; color: white; }
+.badge-p1 { background: #ea580c; color: white; }
+.badge-p2 { background: #ca8a04; color: white; }
+.badge-done { background: #166534; color: #bbf7d0; }
+.badge-pending { background: #854d0e; color: #fef08a; }
+.badge-progress { background: #1e40af; color: #bfdbfe; }
+.badge-verified { background: #166534; color: #bbf7d0; }
+.badge-unverified { background: #991b1b; color: #fecaca; }
+.badge-score { padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+.badge-score.green { background: rgba(74,222,128,0.2); color: var(--green); }
+.badge-score.yellow { background: rgba(250,204,21,0.2); color: var(--yellow); }
+.badge-score.red { background: rgba(248,113,113,0.2); color: var(--red); }
+
+/* Score Card */
+.score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.score-card { background: var(--bg); border-radius: 8px; padding: 1.25rem; border: 1px solid var(--border); }
+.score-card .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.score-card .name { font-weight: 600; color: var(--text); }
+.score-card .score { font-size: 1.5rem; font-weight: 700; }
+.score-card .evidence { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.75rem; padding-left: 1rem; border-left: 3px solid var(--border); }
+.score-card .deductions { font-size: 0.8rem; color: var(--red); padding-left: 1rem; }
+.score-card .bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+.score-card .bar-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
 
 /* Risk Table */
-.risk-table td:nth-child(1) { width: 60px; text-align: center; }
-.risk-table td:nth-child(2) { width: 80px; }
-.risk-table td:nth-child(4) { max-width: 300px; }
+.risk-table { width: 100%; }
+.risk-table th, .risk-table td { padding: 1rem; }
+.risk-table th { background: var(--bg); }
+.risk-table .p0 { border-left: 4px solid #dc2626; }
+.risk-table .p1 { border-left: 4px solid #ea580c; }
+.risk-table .p2 { border-left: 4px solid #ca8a04; }
+.risk-item { margin-bottom: 1rem; padding: 1rem; background: var(--bg); border-radius: 8px; }
+.risk-item h4 { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+.risk-item .desc { font-size: 0.85rem; color: var(--text-dim); margin-bottom: 0.5rem; }
+.risk-item .fix { font-size: 0.85rem; color: var(--green); }
+.risk-item .work { font-size: 0.8rem; color: var(--muted); margin-top: 0.5rem; }
+
+/* Verification Matrix */
+.verify-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+.verify-card { background: var(--bg); border-radius: 8px; padding: 1.25rem; border: 1px solid var(--border); }
+.verify-card h4 { font-size: 0.95rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+.verify-card .method { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+.verify-card .status-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+.verify-card .progress { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.verify-card .progress-fill { height: 100%; background: var(--blue); }
 
 /* Roadmap */
-.roadmap { display: flex; gap: 1rem; flex-wrap: wrap; }
-.roadmap-phase { flex: 1; min-width: 250px; background: #0f172a; border-radius: 8px; padding: 1rem; }
-.roadmap-phase h4 { color: #3b82f6; margin-bottom: 0.75rem; font-size: 0.9rem; }
-.roadmap-phase ul { list-style: none; }
-.roadmap-phase li { padding: 0.25rem 0; font-size: 0.85rem; color: #94a3b8; }
-.roadmap-phase li::before { content: "•"; color: #4ade80; margin-right: 0.5rem; }
+.roadmap { position: relative; }
+.roadmap::before { content: ''; position: absolute; left: 20px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+.roadmap-phase { margin-bottom: 2rem; padding-left: 50px; position: relative; }
+.roadmap-phase::before { content: ''; position: absolute; left: 12px; top: 8px; width: 18px; height: 18px; border-radius: 50%; background: var(--blue); border: 3px solid var(--bg); }
+.roadmap-phase h4 { color: var(--blue); margin-bottom: 0.75rem; font-size: 1rem; }
+.roadmap-phase .tasks { list-style: none; }
+.roadmap-phase .tasks li { padding: 0.4rem 0; font-size: 0.9rem; color: var(--text-dim); display: flex; align-items: center; gap: 0.5rem; }
+.roadmap-phase .tasks li::before { content: '○'; color: var(--muted); }
+.roadmap-phase.completed::before { background: var(--green); }
+.roadmap-phase.in-progress::before { background: var(--yellow); }
+
+/* Flow Chart */
+.flow-container { background: var(--bg); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
+.flow-step { display: flex; align-items: center; gap: 1rem; padding: 1rem 0; border-bottom: 1px dashed var(--border); }
+.flow-step:last-child { border-bottom: none; }
+.flow-step .num { width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+.flow-step .desc { flex: 1; }
+.flow-step .desc h5 { font-size: 0.95rem; margin-bottom: 0.25rem; }
+.flow-step .desc p { font-size: 0.8rem; color: var(--muted); }
+.flow-step .arrow { color: var(--blue); font-size: 1.5rem; }
 
 /* Code Block */
-.code-block { background: #0f172a; border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.8rem; overflow-x: auto; }
-.code-block .comment { color: #64748b; }
+.code-block { background: var(--bg); border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.8rem; overflow-x: auto; line-height: 1.8; }
 .code-block .key { color: #60a5fa; }
 .code-block .value { color: #4ade80; }
+.code-block .comment { color: #64748b; }
+.code-block .string { color: #f9e2af; }
+
+/* Heatmap / Capability Matrix */
+.heatmap { display: grid; grid-template-columns: 200px repeat(4, 1fr); gap: 2px; background: var(--border); border-radius: 8px; overflow: hidden; }
+.heatmap-header { background: var(--bg); padding: 0.75rem; text-align: center; font-size: 0.8rem; font-weight: 600; color: var(--text-dim); }
+.heatmap-row { display: contents; }
+.heatmap-cell { padding: 1rem; display: flex; align-items: center; justify-content: center; background: var(--bg2); }
+.heatmap-cell .score { font-size: 1.25rem; font-weight: 700; }
+.heatmap-cell .label { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+.heatmap-cell.full { background: rgba(74,222,128,0.15); }
+.heatmap-cell.partial { background: rgba(250,204,21,0.15); }
+.heatmap-cell.empty { background: rgba(248,113,113,0.15); }
+
+/* Legend */
+.legend { display: flex; gap: 1.5rem; margin: 1rem 0; flex-wrap: wrap; font-size: 0.85rem; }
+.legend-item { display: flex; align-items: center; gap: 0.5rem; }
+.legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+.legend-dot.green { background: var(--green); }
+.legend-dot.yellow { background: var(--yellow); }
+.legend-dot.red { background: var(--red); }
 
 /* Footer */
-.footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.85rem; }
+.footer { text-align: center; padding: 3rem 2rem; color: var(--muted); font-size: 0.85rem; }
+.footer .divider { width: 100px; height: 2px; background: var(--border); margin: 0 auto 1rem; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container { padding: 1rem; }
+  .cover h1 { font-size: 2rem; }
+  .dashboard { grid-template-columns: repeat(2, 1fr); }
+  .score-grid { grid-template-columns: 1fr; }
+  .heatmap { grid-template-columns: 150px repeat(4, 1fr); font-size: 0.8rem; }
+}
 </style>
 </head>
 <body>
 <div class="container">
 
-<!-- Cover -->
+<!-- ========== 1. COVER ========== -->
 <div class="cover">
   <h1>nacayu-wiki</h1>
-  <p class="subtitle">嵌入式个人知识管理系统设计评审</p>
+  <p class="subtitle">嵌入式个人知识管理系统 · 系统设计评审</p>
   <div class="meta">
-    <span class="badge badge-approved">设计已确认</span>
+    <span class="badge badge-review">评审阶段: 架构设计</span>
     <span>•</span>
-    <span>日期: 2026-05-20</span>
+    <span>2026-05-20</span>
     <span>•</span>
-    <span>版本: v1.0</span>
+    <span>v1.0</span>
+    <span>•</span>
+    <span>内部评审</span>
+  </div>
+  <div class="verdict">
+    <h3>评审结论: 建议通过</h3>
+    <p style="color: var(--text-dim); font-size: 0.9rem;">核心架构设计合理，实施路径清晰。建议优先实现过滤脚本验证。</p>
   </div>
 </div>
 
-<!-- Executive Dashboard -->
+<!-- ========== 2. EXECUTIVE DASHBOARD ========== -->
 <div class="dashboard">
-  <div class="metric-card">
+  <div class="metric-card green">
     <div class="label">架构完整性</div>
     <div class="value green">85%</div>
-    <div class="desc">核心组件已设计</div>
+    <div class="detail">核心组件已设计，待实现过滤脚本</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width: 85%; background: var(--green);"></div></div>
   </div>
-  <div class="metric-card">
-    <div class="label">风险等级</div>
-    <div class="value yellow">P1</div>
-    <div class="desc">需关注过滤验证</div>
+  <div class="metric-card yellow">
+    <div class="label">产品就绪度</div>
+    <div class="value yellow">65%</div>
+    <div class="detail">基础框架完成，内容尚未迁移</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width: 65%; background: var(--yellow);"></div></div>
   </div>
-  <div class="metric-card">
-    <div class="label">实施难度</div>
-    <div class="value green">中</div>
-    <div class="desc">Python + Quarto</div>
+  <div class="metric-card yellow">
+    <div class="label">验证置信度</div>
+    <div class="value yellow">40%</div>
+    <div class="detail">CI 流程未实现，无运行时验证</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width: 40%; background: var(--yellow);"></div></div>
   </div>
-  <div class="metric-card">
+  <div class="metric-card green">
+    <div class="label">风险控制</div>
+    <div class="value green">75%</div>
+    <div class="detail">P1 风险有缓解措施，P2 可接受</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width: 75%; background: var(--green);"></div></div>
+  </div>
+  <div class="metric-card green">
+    <div class="label">可维护性</div>
+    <div class="value green">80%</div>
+    <div class="detail">目录结构清晰，脚本模块化</div>
+    <div class="score-bar"><div class="score-bar-fill" style="width: 80%; background: var(--green);"></div></div>
+  </div>
+  <div class="metric-card yellow">
     <div class="label">预计工时</div>
-    <div class="value">2-3天</div>
-    <div class="desc">含测试验证</div>
+    <div class="value yellow">2-3天</div>
+    <div class="detail">含脚本实现 + CI 配置 + 测试</div>
   </div>
 </div>
 
-<!-- 1. Project Positioning -->
+<!-- ========== 3. PROJECT POSITIONING ========== -->
 <div class="section">
-  <h2>1. 项目定位与系统边界</h2>
+  <h2><span class="num">3</span>项目定位与系统边界</h2>
   <table>
-    <tr><th>维度</th><th>内容</th></tr>
-    <tr><td>系统名称</td><td>nacayu-wiki - 嵌入式个人知识管理系统</td></tr>
-    <tr><td>核心功能</td><td>GitHub Pages 内嵌 Wiki，支持公开/私人内容混合管理</td></tr>
-    <tr><td>目标用户</td><td>外部访客（公开内容）、自己（完整内容）</td></tr>
-    <tr><td>报告目的</td><td>系统架构设计与实施评审</td></tr>
-    <tr><td>决策支持</td><td>是否采纳此架构，如何实施</td></tr>
+    <tr><th style="width: 180px;">维度</th><th>内容</th></tr>
+    <tr><td>系统名称</td><td><strong>nacayu-wiki</strong> - 嵌入式个人知识管理系统</td></tr>
+    <tr><td>核心定位</td><td>基于 Karpathy LLM Wiki 理念，在 GitHub Pages 内嵌 Wiki，公私内容混合管理</td></tr>
+    <tr><td>目标用户</td><td>① 外部访客（仅公开 Wiki 内容）② 自己（完整内容，含私人）</td></tr>
+    <tr><td>系统边界</td><td>nacayu.github.io 域名下 wiki/ 目录，GitHub Pages 作为展示层</td></tr>
+    <tr><td>报告受众</td><td>技术评审者、项目负责人</td></tr>
+    <tr><td>报告目的</td><td>确认架构设计是否合理，指导实施计划</td></tr>
+    <tr><td>决策支持</td><td>是否采纳此架构？如何安排实施优先级？</td></tr>
   </table>
 </div>
 
-<!-- 2. Architecture -->
+<!-- ========== 4. ARCHITECTURE ========== -->
 <div class="section">
-  <h2>2. 系统架构</h2>
+  <h2><span class="num">4</span>架构设计</h2>
   
-  <h3>2.1 系统边界图</h3>
-  <div class="architecture">
-    <div style="text-align:center;margin-bottom:1rem;">
-      <strong>nacayu.github.io</strong>
-    </div>
-    <div class="arch-layer">
-      <div class="arch-box public">
-        <h4>Public Pages</h4>
-        <p>首页 / 关于 / 简历 / 博客</p>
-        <span class="status status-yes">✅ 公开访问</span>
-      </div>
-      <div class="arch-box public">
-        <h4>Public Wiki</h4>
-        <p>公开知识文章</p>
-        <span class="status status-yes">✅ GitHub Pages 可访问</span>
-      </div>
-      <div class="arch-box private">
-        <h4>Private Wiki</h4>
-        <p>私人笔记/草稿</p>
-        <span class="status status-no">❌ GitHub Pages 不可见</span>
-      </div>
-    </div>
-    <div style="text-align:center;font-size:0.8rem;color:#64748b;">
-      本地环境: 完整内容 | CI 环境: 仅公开内容
-    </div>
+  <h3>4.1 系统边界图</h3>
+  <div class="architecture-svg">
+    <svg viewBox="0 0 900 450" class="svg-container" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer boundary -->
+      <rect x="10" y="10" width="880" height="430" rx="12" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="8,4"/>
+      <text x="440" y="35" text-anchor="middle" fill="#94a3b8" font-size="14" font-weight="600">nacayu.github.io</text>
+      
+      <!-- Public Pages Box -->
+      <rect x="30" y="55" width="260" height="120" rx="8" fill="#166534" fill-opacity="0.2" stroke="#4ade80" stroke-width="2"/>
+      <text x="160" y="85" text-anchor="middle" fill="#4ade80" font-size="14" font-weight="700">Public Pages</text>
+      <rect x="50" y="100" width="220" height="25" rx="4" fill="#1e293b"/>
+      <text x="160" y="117" text-anchor="middle" fill="#e2e8f0" font-size="11">首页 · 关于 · 简历</text>
+      <rect x="50" y="130" width="220" height="25" rx="4" fill="#1e293b"/>
+      <text x="160" y="147" text-anchor="middle" fill="#e2e8f0" font-size="11">博客文章 (blog/)</text>
+      
+      <!-- Wiki Section -->
+      <rect x="310" y="55" width="560" height="320" rx="8" fill="#1e40af" fill-opacity="0.15" stroke="#3b82f6" stroke-width="2"/>
+      <text x="590" y="85" text-anchor="middle" fill="#60a5fa" font-size="14" font-weight="700">Wiki Section</text>
+      
+      <!-- Public Wiki -->
+      <rect x="330" y="100" width="250" height="150" rx="8" fill="#166534" fill-opacity="0.3" stroke="#4ade80" stroke-width="2"/>
+      <text x="455" y="130" text-anchor="middle" fill="#4ade80" font-size="12" font-weight="600">Public Wiki</text>
+      <text x="455" y="150" text-anchor="middle" fill="#94a3b8" font-size="10">visibility: public</text>
+      <rect x="350" y="165" width="210" height="70" rx="4" fill="#0f172a"/>
+      <text x="455" y="185" text-anchor="middle" fill="#4ade80" font-size="10">• LLM Architecture</text>
+      <text x="455" y="200" text-anchor="middle" fill="#4ade80" font-size="10">• Attention Mechanism</text>
+      <text x="455" y="215" text-anchor="middle" fill="#4ade80" font-size="10">• CS336 Notes</text>
+      <circle cx="555" cy="180" r="20" fill="#166534"/>
+      <text x="555" y="185" text-anchor="middle" fill="#4ade80" font-size="16">✓</text>
+      <text x="555" y="220" text-anchor="middle" fill="#4ade80" font-size="9">GitHub Pages</text>
+      
+      <!-- Private Wiki -->
+      <rect x="600" y="100" width="250" height="150" rx="8" fill="#991b1b" fill-opacity="0.3" stroke="#f87171" stroke-width="2"/>
+      <text x="725" y="130" text-anchor="middle" fill="#f87171" font-size="12" font-weight="600">Private Wiki</text>
+      <text x="725" y="150" text-anchor="middle" fill="#94a3b8" font-size="10">visibility: private</text>
+      <rect x="620" y="165" width="210" height="70" rx="4" fill="#0f172a"/>
+      <text x="725" y="185" text-anchor="middle" fill="#f87171" font-size="10">• Learning Diary</text>
+      <text x="725" y="200" text-anchor="middle" fill="#f87171" font-size="10">• Personal Notes</text>
+      <text x="725" y="215" text-anchor="middle" fill="#f87171" font-size="10">• Draft Articles</text>
+      <circle cx="725" cy="180" r="20" fill="#991b1b"/>
+      <text x="725" y="185" text-anchor="middle" fill="#f87171" font-size="16">🔒</text>
+      <text x="725" y="220" text-anchor="middle" fill="#f87171" font-size="9">Local Only</text>
+      
+      <!-- CI Pipeline -->
+      <rect x="330" y="275" width="520" height="85" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+      <text x="590" y="300" text-anchor="middle" fill="#94a3b8" font-size="12" font-weight="600">CI Pipeline (GitHub Actions)</text>
+      
+      <!-- Filter Step -->
+      <rect x="350" y="310" width="100" height="40" rx="6" fill="#1e40af"/>
+      <text x="400" y="335" text-anchor="middle" fill="white" font-size="10">filter-wiki.py</text>
+      
+      <!-- Arrow -->
+      <line x1="455" y1="330" x2="490" y2="330" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+      
+      <!-- Render Step -->
+      <rect x="495" y="310" width="100" height="40" rx="6" fill="#166534"/>
+      <text x="545" y="335" text-anchor="middle" fill="white" font-size="10">quarto render</text>
+      
+      <!-- Arrow -->
+      <line x1="600" y1="330" x2="635" y2="330" stroke="#64748b" stroke-width="2"/>
+      
+      <!-- Publish Step -->
+      <rect x="640" y="310" width="100" height="40" rx="6" fill="#854d0e"/>
+      <text x="690" y="335" text-anchor="middle" fill="white" font-size="10">publish</text>
+      
+      <!-- Legend -->
+      <rect x="30" y="320" width="250" height="100" rx="8" fill="#1e293b" stroke="#334155"/>
+      <text x="155" y="345" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="600">图例</text>
+      <circle cx="55" cy="365" r="8" fill="#4ade80"/>
+      <text x="75" y="369" fill="#e2e8f0" font-size="10">公开可见</text>
+      <circle cx="55" cy="390" r="8" fill="#f87171"/>
+      <text x="75" y="394" fill="#e2e8f0" font-size="10">私人内容</text>
+      <circle cx="55" cy="415" r="8" fill="#3b82f6"/>
+      <text x="75" y="419" fill="#e2e8f0" font-size="10">系统组件</text>
+      
+      <!-- Arrow marker -->
+      <defs>
+        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L9,3 z" fill="#64748b"/>
+        </marker>
+      </defs>
+    </svg>
   </div>
-
-  <h3>2.2 目录结构</h3>
+  
+  <h3>4.2 目录结构</h3>
   <div class="dirs">
-    <div class="file public">nacayu.github.io/</div>
-    <div class="file public indent">├── _quarto.yml</div>
-    <div class="file public indent">├── index.qmd, about.qmd, cv.qmd</div>
-    <div class="file public indent">├── blog/</div>
-    <div class="file public indent">├── wiki/</div>
-    <div class="file public indent">│   ├── index.qmd          <span class="comment"># Wiki 索引页</span></div>
-    <div class="file public indent">│   ├── public/           <span class="comment"># 公开内容</span></div>
-    <div class="file meta indent">│   │   └── _metadata.yml  <span class="comment"># default: visibility: public</span></div>
-    <div class="file public indent">│   └── private/          <span class="comment"># 私人内容</span></div>
-    <div class="file meta indent">│       └── _metadata.yml  <span class="comment"># default: visibility: private</span></div>
-    <div class="file meta indent">├── scripts/</div>
-    <div class="file meta indent">│   └── filter-wiki.py   <span class="comment"># 过滤脚本</span></div>
-    <div class="file public indent">└── .github/workflows/</div>
-    <div class="file meta indent">    └── publish.yml        <span class="comment"># CI/CD</span></div>
+    <div class="line public"><span class="public">nacayu.github.io/</span></div>
+    <div class="line meta"><span class="meta">├── _quarto.yml</span> <span class="comment"># Quarto 配置</span></div>
+    <div class="line public"><span class="public">├── index.qmd, about.qmd, cv.qmd</span></div>
+    <div class="line public"><span class="public">├── blog/</span></div>
+    <div class="line public indent">└── index.qmd</div>
+    <div class="line public"><span class="public">├── wiki/</span> <span class="comment"># Wiki 知识库</span></div>
+    <div class="line public indent">├── index.qmd <span class="comment"># Wiki 索引页</span></div>
+    <div class="line public"><span class="public">│   ├── public/</span> <span class="comment"># 公开内容</span></div>
+    <div class="line meta indent">│   │   ├── _metadata.yml <span class="comment"># default: visibility: public</span></div>
+    <div class="line public indent">│   │   ├── LLM-Architecture.qmd</div>
+    <div class="line public indent">│   │   └── *.qmd</div>
+    <div class="line private"><span class="private">│   └── private/</span> <span class="comment"># 私人内容</span></div>
+    <div class="line meta indent">│       ├── _metadata.yml <span class="comment"># default: visibility: private</span></div>
+    <div class="line private indent">│       ├── Learning-Diary.qmd</div>
+    <div class="line private indent">│       └── *.qmd</div>
+    <div class="line meta"><span class="meta">├── scripts/</span></div>
+    <div class="line meta indent">└── filter-wiki.py <span class="comment"># 过滤脚本</span></div>
+    <div class="line meta"><span class="meta">└── .github/workflows/</span></div>
+    <div class="line meta indent">└── publish.yml <span class="comment"># CI/CD</span></div>
   </div>
-
-  <h3>2.3 Frontmatter 格式</h3>
+  
+  <h3>4.3 Frontmatter 格式</h3>
   <div class="code-block">
 <span class="key">---</span>
 <span class="key">title</span>: <span class="value">"Transformer Attention Mechanism"</span>
@@ -202,183 +375,406 @@ tr:hover { background: #334155; }
   </div>
 </div>
 
-<!-- 3. Components -->
+<!-- ========== 5. PROCESS ========== -->
 <div class="section">
-  <h2>3. 核心组件状态</h2>
-  <table>
-    <tr>
-      <th>组件</th>
-      <th>状态</th>
-      <th>说明</th>
-    </tr>
-    <tr>
-      <td>GitHub Pages 网站</td>
-      <td><span class="badge-done">已完成</span></td>
-      <td>基础框架已部署</td>
-    </tr>
-    <tr>
-      <td>Wiki 目录结构</td>
-      <td><span class="badge-done">已设计</span></td>
-      <td>public/private 分离</td>
-    </tr>
-    <tr>
-      <td>filter-wiki.py</td>
-      <td><span class="badge-pending">待实现</span></td>
-      <td>Python 过滤脚本</td>
-    </tr>
-    <tr>
-      <td>GitHub Actions CI</td>
-      <td><span class="badge-pending">待实现</span></td>
-      <td>过滤 → 渲染 → 发布</td>
-    </tr>
-    <tr>
-      <td>Wiki 首页/索引</td>
-      <td><span class="badge-pending">待实现</span></td>
-      <td>展示公开 wiki 内容</td>
-    </tr>
-    <tr>
-      <td>_metadata.yml 配置</td>
-      <td><span class="badge-pending">待实现</span></td>
-      <td>目录级默认 visibility</td>
-    </tr>
-  </table>
+  <h2><span class="num">5</span>核心流程</h2>
+  
+  <h3>5.1 内容管理流程</h3>
+  <div class="flow-container">
+    <div class="flow-step">
+      <div class="num">1</div>
+      <div class="desc">
+        <h5>创建内容</h5>
+        <p>在 wiki/public/ 或 wiki/private/ 下创建 .qmd 文件，编写 Frontmatter 和内容</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">2</div>
+      <div class="desc">
+        <h5>设置可见性</h5>
+        <p>通过 Frontmatter 的 visibility 字段标记 public/private</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">3</div>
+      <div class="desc">
+        <h5>本地预览</h5>
+        <p>运行 quarto render 本地预览完整内容（含私人）</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">4</div>
+      <div class="desc">
+        <h5>推送到 GitHub</h5>
+        <p>git push 触发 GitHub Actions</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">5</div>
+      <div class="desc">
+        <h5>CI 自动过滤</h5>
+        <p>filter-wiki.py 扫描并过滤 private 内容</p>
+      </div>
+    </div>
+    <div class="flow-step">
+      <div class="num">6</div>
+      <div class="desc">
+        <h5>发布到 GitHub Pages</h5>
+        <p>仅公开内容渲染并发布到 gh-pages</p>
+      </div>
+    </div>
+  </div>
+  
+  <h3>5.2 过滤脚本逻辑</h3>
+  <div class="code-block">
+<span class="comment"># filter-wiki.py 核心逻辑</span>
+<span class="key">def</span> scan_wiki(directory):
+    <span class="key">for</span> root, dirs, files <span class="key">in</span> walk(directory):
+        <span class="key">for</span> f <span class="key">in</span> files:
+            <span class="key">if</span> f.endswith(<span class="string">'.qmd'</span>):
+                meta = parse_frontmatter(f)
+                <span class="key">if</span> meta.get(<span class="string">'visibility'</span>) == <span class="string">'private'</span>:
+                    skip_file(f)
+                <span class="key">else</span>:
+                    include_file(f)
+
+<span class="key">def</span> parse_frontmatter(file):
+    <span class="comment"># 解析 YAML frontmatter</span>
+    <span class="key">return</span> yaml.safe_load(open(file))
+
+<span class="key">def</span> handle_metadata_yml(dir):
+    <span class="comment"># 目录级 _metadata.yml 设置默认 visibility</span>
+    default = parse(dir/<span class="string">'_metadata.yml'</span>).get(<span class="string">'visibility'</span>, <span class="string">'public'</span>)
+    <span class="key">return</span> default
+  </div>
+</div>
 </div>
 
-<!-- 4. Capability Matrix -->
+<!-- ========== 6. CAPABILITY MATRIX ========== -->
 <div class="section">
-  <h2>4. 能力矩阵</h2>
-  <table>
-    <tr>
-      <th>能力</th>
-      <th>状态</th>
-      <th>说明</th>
-    </tr>
-    <tr>
-      <td>公开内容展示</td>
-      <td><span class="badge-done">已完成</span></td>
-      <td>GitHub Pages 渲染 public/</td>
-    </tr>
-    <tr>
-      <td>私人内容本地访问</td>
-      <td><span class="badge-done">已设计</span></td>
-      <td>本地完整内容</td>
-    </tr>
-    <tr>
-      <td>自动过滤</td>
-      <td><span class="badge-pending">待实现</span></td>
-      <td>Python 脚本 + CI</td>
-    </tr>
-    <tr>
-      <td>Wiki 搜索</td>
-      <td><span class="badge-pending">待规划</span></td>
-      <td>可选：qmd 搜索</td>
-    </tr>
-    <tr>
-      <td>知识图谱</td>
-      <td><span class="badge-pending">待规划</span></td>
-      <td>Obsidian 图谱查看</td>
-    </tr>
-  </table>
+  <h2><span class="num">6</span>能力矩阵</h2>
+  <div class="heatmap">
+    <div class="heatmap-header">能力</div>
+    <div class="heatmap-header">完整性</div>
+    <div class="heatmap-header">可用性</div>
+    <div class="heatmap-header">可扩展</div>
+    <div class="heatmap-header">优先级</div>
+    
+    <div class="heatmap-row">
+      <div class="heatmap-cell" style="justify-content: flex-start; padding-left: 1rem;">公开内容展示</div>
+      <div class="heatmap-cell full"><span class="score green">90%</span></div>
+      <div class="heatmap-cell full"><span class="score green">85%</span></div>
+      <div class="heatmap-cell full"><span class="score green">80%</span></div>
+      <div class="heatmap-cell"><span class="badge-done">P0</span></div>
+    </div>
+    <div class="heatmap-row">
+      <div class="heatmap-cell" style="justify-content: flex-start; padding-left: 1rem;">私人内容隔离</div>
+      <div class="heatmap-cell full"><span class="score green">85%</span></div>
+      <div class="heatmap-cell partial"><span class="score yellow">70%</span></div>
+      <div class="heatmap-cell full"><span class="score green">80%</span></div>
+      <div class="heatmap-cell"><span class="badge-done">P0</span></div>
+    </div>
+    <div class="heatmap-row">
+      <div class="heatmap-cell" style="justify-content: flex-start; padding-left: 1rem;">自动过滤 CI</div>
+      <div class="heatmap-cell partial"><span class="score yellow">50%</span></div>
+      <div class="heatmap-cell partial"><span class="score yellow">40%</span></div>
+      <div class="heatmap-cell partial"><span class="score yellow">60%</span></div>
+      <div class="heatmap-cell"><span class="badge-done">P1</span></div>
+    </div>
+    <div class="heatmap-row">
+      <div class="heatmap-cell" style="justify-content: flex-start; padding-left: 1rem;">Wiki 搜索</div>
+      <div class="heatmap-cell empty"><span class="score red">0%</span></div>
+      <div class="heatmap-cell empty"><span class="score red">0%</span></div>
+      <div class="heatmap-cell full"><span class="score green">75%</span></div>
+      <div class="heatmap-cell"><span class="badge-pending">P2</span></div>
+    </div>
+    <div class="heatmap-row">
+      <div class="heatmap-cell" style="justify-content: flex-start; padding-left: 1rem;">知识图谱</div>
+      <div class="heatmap-cell empty"><span class="score red">0%</span></div>
+      <div class="heatmap-cell empty"><span class="score red">0%</span></div>
+      <div class="heatmap-cell partial"><span class="score yellow">50%</span></div>
+      <div class="heatmap-cell"><span class="badge-pending">P3</span></div>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot green"></div>高 (70-100%)</div>
+    <div class="legend-item"><div class="legend-dot yellow"></div>中 (40-69%)</div>
+    <div class="legend-item"><div class="legend-dot red"></div>低 (0-39%)</div>
+  </div>
 </div>
 
-<!-- 5. Risk Board -->
+<!-- ========== 7. SCORING ========== -->
 <div class="section">
-  <h2>5. 风险看板</h2>
-  <table class="risk-table">
-    <tr>
-      <th>ID</th>
-      <th>级别</th>
-      <th>风险</th>
-      <th>缓解措施</th>
-    </tr>
-    <tr>
-      <td><span class="badge-p1">P1</span></td>
-      <td>隐私</td>
-      <td>私人内容误推送至 GitHub Pages</td>
-      <td>CI 过滤脚本 + 验证测试</td>
-    </tr>
-    <tr>
-      <td><span class="badge-p2">P2</span></td>
-      <td>维护</td>
-      <td>Wiki 内容膨胀难以管理</td>
-      <td>定期 lint + 归档策略</td>
-    </tr>
-    <tr>
-      <td><span class="badge-p2">P2</span></td>
-      <td>质量</td>
-      <td>LLM 生成知识存在错误</td>
-      <td>人工审核机制</td>
-    </tr>
-  </table>
+  <h2><span class="num">7</span>评分模型</h2>
+  <div class="score-grid">
+    <div class="score-card">
+      <div class="header">
+        <span class="name">产品就绪度</span>
+        <span class="score" style="color: var(--yellow);">65/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 65%; background: var(--yellow);"></div></div>
+      <div class="evidence">证据: 基础 Quarto 网站已部署，Wiki 目录结构已设计，内容尚未迁移</div>
+      <div class="deductions">扣分: ① 过滤脚本未实现 ② Wiki 内容空缺 ③ 无实际运行验证</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">架构健康度</span>
+        <span class="score" style="color: var(--green);">85/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 85%; background: var(--green);"></div></div>
+      <div class="evidence">证据: 三层架构清晰(public/private分离)，Frontmatter 简单有效，CI 流程设计合理</div>
+      <div class="deductions">扣分: ① 未考虑 multi-tenancy ② 缺少灾备方案</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">能力完整性</span>
+        <span class="score" style="color: var(--yellow);">60/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 60%; background: var(--yellow);"></div></div>
+      <div class="evidence">证据: 核心功能(公开/私人分离)已设计，搜索/图谱缺失</div>
+      <div class="deductions">扣分: ① 搜索功能未规划 ② 图谱功能缺失 ③ 无版本控制策略</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">验证置信度</span>
+        <span class="score" style="color: var(--yellow);">40/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 40%; background: var(--yellow);"></div></div>
+      <div class="evidence">证据: 无实际测试数据，基于设计推断</div>
+      <div class="deductions">扣分: ① CI 未实现 ② 过滤脚本未测试 ③ 无端到端验证</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">工程质量</span>
+        <span class="score" style="color: var(--green);">80/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 80%; background: var(--green);"></div></div>
+      <div class="evidence">证据: Quarto 本身成熟，Python 脚本简单直接，目录结构清晰</div>
+      <div class="deductions">扣分: ① 脚本无单元测试 ② 无 lint 工具 ③ 代码注释不足</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">可维护性</span>
+        <span class="score" style="color: var(--green);">80/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 80%; background: var(--green);"></div></div>
+      <div class="evidence">证据: 目录结构清晰，Frontmatter 格式统一，Git 版本控制</div>
+      <div class="deductions">扣分: ① 无维护文档 ② 无升级策略 ③ 私人内容无备份机制</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">运维就绪度</span>
+        <span class="score" style="color: var(--yellow);">55/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 55%; background: var(--yellow);"></div></div>
+      <div class="evidence">证据: GitHub Actions 可用，文档部分完成</div>
+      <div class="deductions">扣分: ① CI 未配置 ② 无监控 ③ 无告警 ④ 故障恢复流程缺失</div>
+    </div>
+    
+    <div class="score-card">
+      <div class="header">
+        <span class="name">风险控制</span>
+        <span class="score" style="color: var(--green);">75/100</span>
+      </div>
+      <div class="bar"><div class="bar-fill" style="width: 75%; background: var(--green);"></div></div>
+      <div class="evidence">证据: P1 风险(隐私泄露)有缓解措施，P2 风险可接受</div>
+      <div class="deductions">扣分: ① 过滤脚本无测试验证 ② 无灾备 ③ 无定期安全审计</div>
+    </div>
+  </div>
+  
+  <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg); border-radius: 8px; text-align: center;">
+    <span style="font-size: 1.5rem; font-weight: 700;">综合评分</span>
+    <span style="font-size: 3rem; font-weight: 700; color: var(--yellow); margin-left: 1rem;">67/100</span>
+    <span style="color: var(--muted); margin-left: 0.5rem;">(中等)</span>
+  </div>
 </div>
 
-<!-- 6. Roadmap -->
+<!-- ========== 8. RISK BOARD ========== -->
 <div class="section">
-  <h2>6. 实施路线图</h2>
+  <h2><span class="num">8</span>风险看板</h2>
+  
+  <div class="risk-item p0">
+    <h4><span class="badge badge-p0">P0</span> 私人内容误推送</h4>
+    <div class="desc">CI 过滤脚本 BUG 或配置错误，导致 private 内容推送到 GitHub Pages</div>
+    <div class="desc"><strong>影响:</strong> 隐私泄露，不可逆</div>
+    <div class="fix"><strong>缓解:</strong> ① filter-wiki.py 需编写单元测试 ② CI 完成后进行端到端验证 ③ 添加 pre-push hook 本地检查</div>
+    <div class="work">工作量: 0.5天(测试) + 0.5天(验证)</div>
+  </div>
+  
+  <div class="risk-item p1">
+    <h4><span class="badge badge-p1">P1</span> 过滤脚本维护困难</h4>
+    <div class="desc">随着 wiki 内容增长，过滤逻辑可能变得复杂</div>
+    <div class="desc"><strong>影响:</strong> 可维护性下降，未来迭代成本增加</div>
+    <div class="fix"><strong>缓解:</strong> ① 保持脚本简单，遵循单一职责 ② 添加详细注释 ③ 使用 type hints</div>
+    <div class="work">工作量: 0.5天(重构)</div>
+  </div>
+  
+  <div class="risk-item p1">
+    <h4><span class="badge badge-p1">P1</span> Wiki 内容膨胀</h4>
+    <div class="desc">缺乏整理机制，内容越来越杂乱，难以维护</div>
+    <div class="desc"><strong>影响:</strong> 知识库价值降低，变成"知识垃圾桶"</div>
+    <div class="fix"><strong>缓解:</strong> ① 定期 lint (参照 Karpathy 方案) ② 使用 tags 分类 ③ 设置归档策略</div>
+    <div class="work">工作量: 0.5天(lint 脚本) + 持续维护</div>
+  </div>
+  
+  <div class="risk-item p2">
+    <h4><span class="badge badge-p2">P2</span> LLM 生成质量不可控</h4>
+    <div class="desc">LLM 生成的 wiki 内容可能存在错误或偏见</div>
+    <div class="desc"><strong>影响:</strong> 知识准确性下降</div>
+    <div class="fix"><strong>缓解:</strong> ① 关键内容人工审核 ② 设置 accuracy check 流程</div>
+    <div class="work">工作量: 持续</div>
+  </div>
+  
+  <div class="risk-item p2">
+    <h4><span class="badge badge-p2">P2</span> 搜索功能缺失</h4>
+    <div class="desc">当前方案无搜索，随着内容增长难以找到需要内容</div>
+    <div class="desc"><strong>影响:</strong> 使用效率降低</div>
+    <div class="fix"><strong>缓解:</strong> ① 使用 Obsidian 客户端搜索 ② 后期接入 qmd 或其他搜索方案</div>
+    <div class="work">工作量: 1天(可选)</div>
+  </div>
+</div>
+
+<!-- ========== 9. VERIFICATION MATRIX ========== -->
+<div class="section">
+  <h2><span class="num">9</span>验证矩阵</h2>
+  <div class="verify-grid">
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> filter-wiki.py 过滤正确性</h4>
+      <div class="method">验证方法: 单元测试 - 创建 public/private 混合文件，运行脚本，检查输出</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> CI 生成的 docs/ 无 private 页面</h4>
+      <div class="method">验证方法: 集成测试 - 构建产物检查 + grep 搜索关键词</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> 本地 wiki/ 包含完整内容</h4>
+      <div class="method">验证方法: 人工检查 - 对比本地和 GitHub Pages 显示内容</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> GitHub Pages 仅显示公开内容</h4>
+      <div class="method">验证方法: 浏览器访问测试 + URL 直接访问 private 页面应返回 404</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> _metadata.yml 目录级默认生效</h4>
+      <div class="method">验证方法: 文件测试 - 在 private/ 下创建无 frontmatter 文件，应标记为 private</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+    
+    <div class="verify-card">
+      <h4><span class="badge-done">待验证</span> Wiki 索引页正确展示</h4>
+      <div class="method">验证方法: 视觉测试 - 索引页包含所有 public wiki 页面链接</div>
+      <div class="progress"><div class="progress-fill" style="width: 0%;"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== 10. ROADMAP ========== -->
+<div class="section">
+  <h2><span class="num">10</span>实施路线图</h2>
   <div class="roadmap">
     <div class="roadmap-phase">
-      <h4>Phase 1: 核心架构</h4>
-      <ul>
-        <li>创建 wiki/ 目录结构</li>
-        <li>编写 _metadata.yml 配置</li>
-        <li>实现 filter-wiki.py 脚本</li>
+      <h4>Phase 1: 核心基础设施 (Day 1)</h4>
+      <ul class="tasks">
+        <li>创建 wiki/ 目录结构 (public/private/_metadata.yml)</li>
+        <li>实现 filter-wiki.py 脚本 (含单元测试)</li>
+        <li>配置 .gitignore 排除敏感文件</li>
+        <li>编写 filter-wiki.py 单元测试</li>
+        <li>本地验证过滤逻辑正确性</li>
       </ul>
     </div>
-    <div class="roadmap-phase">
-      <h4>Phase 2: CI/CD</h4>
-      <ul>
+    
+    <div class="roadmap-phase in-progress">
+      <h4>Phase 2: CI/CD 集成 (Day 2)</h4>
+      <ul class="tasks">
         <li>修改 GitHub Actions workflow</li>
-        <li>添加过滤步骤</li>
-        <li>测试公开/私人分离</li>
+        <li>添加 filter-wiki.py 到 CI 流程</li>
+        <li>测试 CI 构建产物</li>
+        <li>验证 GitHub Pages 无 private 内容</li>
+        <li>添加回归测试</li>
       </ul>
     </div>
+    
     <div class="roadmap-phase">
-      <h4>Phase 3: 内容填充</h4>
-      <ul>
-        <li>创建 Wiki 索引页</li>
-        <li>迁移/创建 wiki 内容</li>
-        <li>Obsidian 图谱集成</li>
+      <h4>Phase 3: Wiki 内容建设 (Day 3+)</h4>
+      <ul class="tasks">
+        <li>创建 Wiki 索引页 (index.qmd)</li>
+        <li>迁移/创建初始 wiki 内容</li>
+        <li>配置 Obsidian 图谱(可选)</li>
+        <li>建立 lint 机制 (定期清理)</li>
+        <li>内容迭代优化</li>
+      </ul>
+    </div>
+    
+    <div class="roadmap-phase">
+      <h4>Phase 4: 高级功能 (可选)</h4>
+      <ul class="tasks">
+        <li>添加 Wiki 搜索功能 (qmd)</li>
+        <li>知识图谱可视化</li>
+        <li>多语言支持</li>
+        <li>API 接口</li>
       </ul>
     </div>
   </div>
 </div>
 
-<!-- 7. Verification Matrix -->
-<div class="section">
-  <h2>7. 验证矩阵</h2>
-  <table>
-    <tr>
-      <th>验证项</th>
-      <th>方法</th>
-      <th>状态</th>
-    </tr>
-    <tr>
-      <td>filter-wiki.py 正确过滤 private 内容</td>
-      <td>单元测试</td>
-      <td><span class="badge-pending">待验证</span></td>
-    </tr>
-    <tr>
-      <td>CI 生成的 docs/ 不含 private 页面</td>
-      <td>集成测试</td>
-      <td><span class="badge-pending">待验证</span></td>
-    </tr>
-    <tr>
-      <td>本地 wiki/ 包含完整内容</td>
-      <td>人工检查</td>
-      <td><span class="badge-pending">待验证</span></td>
-    </tr>
-    <tr>
-      <td>GitHub Pages 仅显示公开内容</td>
-      <td>浏览器访问测试</td>
-      <td><span class="badge-pending">待验证</span></td>
-    </tr>
-  </table>
+<!-- ========== 11. FINAL CONCLUSION ========== -->
+<div class="section" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%);">
+  <h2><span class="num">11</span>最终结论</h2>
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+    <div style="padding: 1.5rem; background: rgba(22,101,52,0.3); border-radius: 8px; border-left: 4px solid var(--green);">
+      <h4 style="color: var(--green); margin-bottom: 0.75rem;">✓ 评审通过</h4>
+      <p style="font-size: 0.9rem; color: var(--text-dim);">核心架构设计合理，Karpathy LLM Wiki 理念适配良好，风险可控。</p>
+    </div>
+    
+    <div style="padding: 1.5rem; background: rgba(234,88,12,0.15); border-radius: 8px; border-left: 4px solid var(--yellow);">
+      <h4 style="color: var(--yellow); margin-bottom: 0.75rem;">⚠ 优先事项</h4>
+      <p style="font-size: 0.9rem; color: var(--text-dim);">必须实现 filter-wiki.py 并编写完整测试，确保私人内容不被泄露。</p>
+    </div>
+    
+    <div style="padding: 1.5rem; background: rgba(59,130,246,0.15); border-radius: 8px; border-left: 4px solid var(--blue);">
+      <h4 style="color: var(--blue); margin-bottom: 0.75rem;">→ 下一步行动</h4>
+      <p style="font-size: 0.9rem; color: var(--text-dim);">生成详细的 implementation plan，按 Phase 1-3 顺序实施。</p>
+    </div>
+  </div>
+  
+  <div style="margin-top: 2rem; padding: 1rem; background: var(--bg); border-radius: 8px;">
+    <h4 style="margin-bottom: 1rem;">评分汇总</h4>
+    <table>
+      <tr><th>维度</th><th>分数</th><th>评级</th></tr>
+      <tr><td>产品就绪度</td><td>65/100</td><td><span class="badge-score yellow">中等</span></td></tr>
+      <tr><td>架构健康度</td><td>85/100</td><td><span class="badge-score green">良好</span></td></tr>
+      <tr><td>能力完整性</td><td>60/100</td><td><span class="badge-score yellow">中等</span></td></tr>
+      <tr><td>验证置信度</td><td>40/100</td><td><span class="badge-score red">偏低</span></td></tr>
+      <tr><td>工程质量</td><td>80/100</td><td><span class="badge-score green">良好</span></td></tr>
+      <tr><td>可维护性</td><td>80/100</td><td><span class="badge-score green">良好</span></td></tr>
+      <tr><td>运维就绪度</td><td>55/100</td><td><span class="badge-score yellow">中等</span></td></tr>
+      <tr><td>风险控制</td><td>75/100</td><td><span class="badge-score green">良好</span></td></tr>
+      <tr style="background: var(--bg);"><td><strong>综合</strong></td><td><strong>67/100</strong></td><td><span class="badge-score yellow">中等</span></td></tr>
+    </table>
+  </div>
 </div>
 
 <!-- Footer -->
 <div class="footer">
-  <p>设计评审报告 | nacayu-wiki | 2026-05-20</p>
+  <div class="divider"></div>
+  <p>nacayu-wiki 系统设计评审报告 · 2026-05-20</p>
   <p>基于 Karpathy LLM Wiki 理念 + Quarto + GitHub Pages</p>
+  <p style="margin-top: 1rem; color: var(--muted);">报告生成时间: 2026-05-20 | 评审版本: v1.0</p>
 </div>
 
 </div>
