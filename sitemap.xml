@@ -2,18 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://nacayu.github.io/about.html</loc>
-    <lastmod>2026-05-19T18:08:21.697Z</lastmod>
+    <lastmod>2026-05-19T18:14:13.333Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nacayu.github.io/openspec/changes/nacayu-wiki-001/proposal.html</loc>
+    <lastmod>2026-05-19T18:14:13.339Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nacayu.github.io/openspec/changes/nacayu-wiki-001/tasks.html</loc>
+    <lastmod>2026-05-19T18:14:13.339Z</lastmod>
   </url>
   <url>
     <loc>https://nacayu.github.io/index.html</loc>
-    <lastmod>2026-05-19T18:08:21.702Z</lastmod>
+    <lastmod>2026-05-19T18:14:13.339Z</lastmod>
   </url>
   <url>
     <loc>https://nacayu.github.io/cv.html</loc>
-    <lastmod>2026-05-19T18:08:21.697Z</lastmod>
+    <lastmod>2026-05-19T18:14:13.333Z</lastmod>
   </url>
   <url>
     <loc>https://nacayu.github.io/blog/index.html</loc>
-    <lastmod>2026-05-19T18:08:21.697Z</lastmod>
+    <lastmod>2026-05-19T18:14:13.333Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nacayu.github.io/openspec/changes/nacayu-wiki-001/specs.html</loc>
+    <lastmod>2026-05-19T18:14:13.339Z</lastmod>
+  </url>
+  <url>
+    <loc>https://nacayu.github.io/openspec/changes/nacayu-wiki-001/design.html</loc>
+    <lastmod>2026-05-19T18:14:13.339Z</lastmod>
   </url>
 </urlset>

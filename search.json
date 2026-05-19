@@ -14,6 +14,34 @@
     "text": "I am a researcher focused on Autonomous Driving perception, now transitioning to:\n\nAD World Model\nLLM Agents\nVision Language Models (VLM)"
   },
   {
+    "objectID": "openspec/changes/nacayu-wiki-001/proposal.html",
+    "href": "openspec/changes/nacayu-wiki-001/proposal.html",
+    "title": "nacayu-wiki-001: 嵌入式个人知识管理系统",
+    "section": "",
+    "text": "在 nacayu.github.io 中新增 Wiki 模块，支持： - 公开 Wiki - GitHub Pages 可访问的知识文章 - 私人 Wiki - 本地可访问，推送时自动过滤 - 自动过滤 CI - GitHub Actions 在 publish 时过滤私人内容\n\n\n\n\nKarpathy LLM Wiki 理念实践 - 知识积累而非每次重查找\n个人品牌建设 - 公开 Wiki 展示专业能力\n隐私保护 - 私人内容本地可见，GitHub Pages 不可见\n\n\n\n\nIn Scope: - wiki/ 目录结构 (public/private/_metadata.yml) - filter-wiki.py 过滤脚本 - GitHub Actions CI 修改 - Wiki 索引页 (wiki/index.qmd)\nOut of Scope: - Wiki 搜索功能 - 知识图谱可视化 - 多语言支持\n\n\n\n\n✅ filter-wiki.py 能正确过滤 visibility: private 的文件\n✅ GitHub Actions 构建产物中不包含任何 private 文件\n✅ 本地 wiki/ 目录包含完整内容（含 private）\n✅ Wiki 索引页正常展示公开内容\n✅ 单元测试覆盖过滤逻辑\n\n\nCreated: 2026-05-20 Status: proposed Author: nacayu"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/proposal.html#proposal",
+    "href": "openspec/changes/nacayu-wiki-001/proposal.html#proposal",
+    "title": "nacayu-wiki-001: 嵌入式个人知识管理系统",
+    "section": "",
+    "text": "在 nacayu.github.io 中新增 Wiki 模块，支持： - 公开 Wiki - GitHub Pages 可访问的知识文章 - 私人 Wiki - 本地可访问，推送时自动过滤 - 自动过滤 CI - GitHub Actions 在 publish 时过滤私人内容\n\n\n\n\nKarpathy LLM Wiki 理念实践 - 知识积累而非每次重查找\n个人品牌建设 - 公开 Wiki 展示专业能力\n隐私保护 - 私人内容本地可见，GitHub Pages 不可见\n\n\n\n\nIn Scope: - wiki/ 目录结构 (public/private/_metadata.yml) - filter-wiki.py 过滤脚本 - GitHub Actions CI 修改 - Wiki 索引页 (wiki/index.qmd)\nOut of Scope: - Wiki 搜索功能 - 知识图谱可视化 - 多语言支持\n\n\n\n\n✅ filter-wiki.py 能正确过滤 visibility: private 的文件\n✅ GitHub Actions 构建产物中不包含任何 private 文件\n✅ 本地 wiki/ 目录包含完整内容（含 private）\n✅ Wiki 索引页正常展示公开内容\n✅ 单元测试覆盖过滤逻辑\n\n\nCreated: 2026-05-20 Status: proposed Author: nacayu"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/tasks.html",
+    "href": "openspec/changes/nacayu-wiki-001/tasks.html",
+    "title": "nacayu-wiki-001 Tasks",
+    "section": "",
+    "text": "T1.1: 创建 wiki/ 目录结构\n\nwiki/index.qmd\nwiki/public/_metadata.yml\nwiki/private/_metadata.yml\n\nT1.2: 实现 filter-wiki.py 过滤脚本\n\n扫描 wiki/ 目录下所有 .qmd 文件\n解析 frontmatter 的 visibility 字段\n处理 _metadata.yml 目录级默认配置\n输出过滤后的文件列表\n\nT1.3: 配置 .gitignore\n\n排除 .DS_Store 等系统文件\n确保 private 内容不上传\n\nT1.4: 编写单元测试\n\ntests/test_filter_wiki.py\n测试 public/private 文件识别\n测试 _metadata.yml 默认值\n测试过滤逻辑\n\n\n\n\n\n\nT2.1: 修改 .github/workflows/publish.yml\n\n添加 filter-wiki.py 调用步骤\n确保只渲染公开内容到 docs/\n\nT2.2: 本地验证 CI 流程\n\n推送测试分支\n验证构建产物\n确认无 private 内容泄露\n\n\n\n\n\n\nT3.1: 创建 Wiki 索引页\n\nwiki/index.qmd\n展示所有 public wiki 页面\n分类展示\n\nT3.2: 创建示例 Wiki 内容\n\n至少 3 篇公开 wiki 文章\n至少 1 篇私人 wiki 文章（测试用）\n\n\n\nDependencies: - T1.2 depends on T1.1 - T1.4 depends on T1.2 - T2.1 depends on T1.2, T1.4 - T3.1 depends on T1.1\nTotal Estimated: 2-3 days"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/tasks.html#implementation-tasks",
+    "href": "openspec/changes/nacayu-wiki-001/tasks.html#implementation-tasks",
+    "title": "nacayu-wiki-001 Tasks",
+    "section": "",
+    "text": "T1.1: 创建 wiki/ 目录结构\n\nwiki/index.qmd\nwiki/public/_metadata.yml\nwiki/private/_metadata.yml\n\nT1.2: 实现 filter-wiki.py 过滤脚本\n\n扫描 wiki/ 目录下所有 .qmd 文件\n解析 frontmatter 的 visibility 字段\n处理 _metadata.yml 目录级默认配置\n输出过滤后的文件列表\n\nT1.3: 配置 .gitignore\n\n排除 .DS_Store 等系统文件\n确保 private 内容不上传\n\nT1.4: 编写单元测试\n\ntests/test_filter_wiki.py\n测试 public/private 文件识别\n测试 _metadata.yml 默认值\n测试过滤逻辑\n\n\n\n\n\n\nT2.1: 修改 .github/workflows/publish.yml\n\n添加 filter-wiki.py 调用步骤\n确保只渲染公开内容到 docs/\n\nT2.2: 本地验证 CI 流程\n\n推送测试分支\n验证构建产物\n确认无 private 内容泄露\n\n\n\n\n\n\nT3.1: 创建 Wiki 索引页\n\nwiki/index.qmd\n展示所有 public wiki 页面\n分类展示\n\nT3.2: 创建示例 Wiki 内容\n\n至少 3 篇公开 wiki 文章\n至少 1 篇私人 wiki 文章（测试用）\n\n\n\nDependencies: - T1.2 depends on T1.1 - T1.4 depends on T1.2 - T2.1 depends on T1.2, T1.4 - T3.1 depends on T1.1\nTotal Estimated: 2-3 days"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Zedong Yu",
@@ -75,5 +103,96 @@
     "title": "Blog",
     "section": "",
     "text": "Blog Posts\nHere will be my learning notes and thoughts.\nComing soon…"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "System Name: nacayu-wiki\nType: Embedded personal knowledge management system\nCore Functionality: GitHub Pages integrated Wiki with public/private content separation\nTarget Users: External visitors (public content only), Owner (full content)\n\n\n\n\n\nnacayu.github.io/\n├── _quarto.yml\n├── index.qmd, about.qmd, cv.qmd\n├── blog/\n├── wiki/                          # NEW\n│   ├── index.qmd                  # Wiki index page\n│   ├── public/                   # Public wiki content\n│   │   ├── _metadata.yml          # default: visibility: public\n│   │   └── *.qmd                 # Public wiki files\n│   └── private/                  # Private wiki content\n│       ├── _metadata.yml          # default: visibility: private\n│       └── *.qmd                 # Private wiki files\n├── scripts/\n│   └── filter-wiki.py            # NEW - filter script\n├── docs/                         # Build output (GitHub Pages)\n└── .github/\n    └── workflows/\n        └── publish.yml          # Modified for filtering\n\n\n\n---\ntitle: \"Page Title\"\ndate: \"2025-05-20\"\nvisibility: public      # public | private\ntags: [tag1, tag2]\nsummary: \"Brief description\"\n---\n\n\n\n\nFile-level: visibility field in frontmatter\nDirectory-level: _metadata.yml sets default for directory\nPrecedence: File-level overrides directory-level\n\n\n\n\n\n\n\nPurpose: Scan wiki/ directory and filter files based on visibility\nInput: wiki/ directory path\nOutput: List of .qmd files to include (public only)\nAlgorithm:\n1. Walk wiki/ directory recursively\n2. For each .qmd file:\n   a. Parse frontmatter\n   b. If 'visibility: private' found -&gt; skip\n   c. If in private/ directory AND no frontmatter -&gt; skip (use _metadata.yml default)\n   d. Otherwise -&gt; include\n3. Output list of included files\nError Handling: - Malformed YAML -&gt; log warning, skip file - Missing required fields -&gt; use defaults\n\n\n\nModified File: .github/workflows/publish.yml\nChanges: 1. Before quarto render: Run filter-wiki.py to generate exclusion list 2. Pass exclusion list to quarto render (or pre-delete private files) 3. Only public content gets rendered to docs/\n\n\n\nFile: wiki/index.qmd\nContent: - Title: “Wiki” - List of all public wiki pages with: - Link to page - One-line summary (from frontmatter summary field) - Tags - Date\n\n\n\n\n\n\n\nID\nCriteria\nVerification Method\n\n\n\n\nAC1\nfilter-wiki.py correctly identifies public files\nUnit test\n\n\nAC2\nfilter-wiki.py correctly identifies private files\nUnit test\n\n\nAC3\n_metadata.yml directory defaults work\nUnit test\n\n\nAC4\nCI build output contains no private files\nIntegration test\n\n\nAC5\nLocal wiki/ contains full content\nManual check\n\n\nAC6\nGitHub Pages shows only public content\nBrowser test\n\n\nAC7\nWiki index page displays all public pages\nVisual check\n\n\n\n\n\n\n\nQuarto: Static site generator\nPython: filter-wiki.py implementation\nfrontmatter: Python YAML frontmatter parsing\nGitHub Actions: CI/CD\nGit: Version control\n\n\n\n\n\nWiki search functionality\nKnowledge graph visualization\nMulti-language support\nAPI endpoints\nReal-time collaboration"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#system-overview",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#system-overview",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "System Name: nacayu-wiki\nType: Embedded personal knowledge management system\nCore Functionality: GitHub Pages integrated Wiki with public/private content separation\nTarget Users: External visitors (public content only), Owner (full content)"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#architecture",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#architecture",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "nacayu.github.io/\n├── _quarto.yml\n├── index.qmd, about.qmd, cv.qmd\n├── blog/\n├── wiki/                          # NEW\n│   ├── index.qmd                  # Wiki index page\n│   ├── public/                   # Public wiki content\n│   │   ├── _metadata.yml          # default: visibility: public\n│   │   └── *.qmd                 # Public wiki files\n│   └── private/                  # Private wiki content\n│       ├── _metadata.yml          # default: visibility: private\n│       └── *.qmd                 # Private wiki files\n├── scripts/\n│   └── filter-wiki.py            # NEW - filter script\n├── docs/                         # Build output (GitHub Pages)\n└── .github/\n    └── workflows/\n        └── publish.yml          # Modified for filtering\n\n\n\n---\ntitle: \"Page Title\"\ndate: \"2025-05-20\"\nvisibility: public      # public | private\ntags: [tag1, tag2]\nsummary: \"Brief description\"\n---\n\n\n\n\nFile-level: visibility field in frontmatter\nDirectory-level: _metadata.yml sets default for directory\nPrecedence: File-level overrides directory-level"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#components",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#components",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "Purpose: Scan wiki/ directory and filter files based on visibility\nInput: wiki/ directory path\nOutput: List of .qmd files to include (public only)\nAlgorithm:\n1. Walk wiki/ directory recursively\n2. For each .qmd file:\n   a. Parse frontmatter\n   b. If 'visibility: private' found -&gt; skip\n   c. If in private/ directory AND no frontmatter -&gt; skip (use _metadata.yml default)\n   d. Otherwise -&gt; include\n3. Output list of included files\nError Handling: - Malformed YAML -&gt; log warning, skip file - Missing required fields -&gt; use defaults\n\n\n\nModified File: .github/workflows/publish.yml\nChanges: 1. Before quarto render: Run filter-wiki.py to generate exclusion list 2. Pass exclusion list to quarto render (or pre-delete private files) 3. Only public content gets rendered to docs/\n\n\n\nFile: wiki/index.qmd\nContent: - Title: “Wiki” - List of all public wiki pages with: - Link to page - One-line summary (from frontmatter summary field) - Tags - Date"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#acceptance-criteria",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#acceptance-criteria",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "ID\nCriteria\nVerification Method\n\n\n\n\nAC1\nfilter-wiki.py correctly identifies public files\nUnit test\n\n\nAC2\nfilter-wiki.py correctly identifies private files\nUnit test\n\n\nAC3\n_metadata.yml directory defaults work\nUnit test\n\n\nAC4\nCI build output contains no private files\nIntegration test\n\n\nAC5\nLocal wiki/ contains full content\nManual check\n\n\nAC6\nGitHub Pages shows only public content\nBrowser test\n\n\nAC7\nWiki index page displays all public pages\nVisual check"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#tech-stack",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#tech-stack",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "Quarto: Static site generator\nPython: filter-wiki.py implementation\nfrontmatter: Python YAML frontmatter parsing\nGitHub Actions: CI/CD\nGit: Version control"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/specs.html#out-of-scope",
+    "href": "openspec/changes/nacayu-wiki-001/specs.html#out-of-scope",
+    "title": "nacayu-wiki-001 Specification",
+    "section": "",
+    "text": "Wiki search functionality\nKnowledge graph visualization\nMulti-language support\nAPI endpoints\nReal-time collaboration"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html",
+    "href": "openspec/changes/nacayu-wiki-001/design.html",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "Decision: Use YAML frontmatter visibility field instead of file naming conventions\nAlternatives Considered: - File naming (e.g., _private-*.qmd) - Less explicit, harder to manage - Directory-based - Requires moving files to change visibility - Database/config file - Additional file to maintain\nSelected: Frontmatter-based\nRationale: - LLM-friendly (easy to read/write) - Single source of truth in each file - Directory structure reflects content organization, not access control - Extensible (can add more metadata later)\n\n\n\nDecision: Pure Python implementation (no external dependencies except pyyaml)\nRationale: - Simple, single-file solution - Minimal dependencies (just pyyaml) - Easy to understand and maintain - Can be extended if needed\n\n\n\nDecision: Support directory-level defaults via _metadata.yml\nRationale: - Standard Quarto/_obsidian pattern - Easy bulk setting (all files in directory inherit default) - File-level override when needed - No surprises for content authors\n\n\n\n\n\n\n#!/usr/bin/env python3\n\"\"\"Filter wiki files based on visibility frontmatter.\"\"\"\n\nimport argparse\nfrom pathlib import Path\nfrom typing import List\n\ndef parse_args() -&gt; argparse.Namespace:\n    parser = argparse.ArgumentParser(description='Filter wiki files by visibility')\n    parser.add_argument('wiki_dir', type=Path, help='Wiki directory path')\n    parser.add_argument('--output', type=Path, help='Output file for file list')\n    return parser.parse_args()\n\ndef scan_wiki(wiki_dir: Path) -&gt; List[Path]:\n    \"\"\"Scan wiki directory and return list of public files.\"\"\"\n    ...\n\ndef main():\n    args = parse_args()\n    public_files = scan_wiki(args.wiki_dir)\n    if args.output:\n        args.output.write_text('\\n'.join(str(f) for f in public_files))\n    else:\n        for f in public_files:\n            print(f)\n\nif __name__ == '__main__':\n    main()\n\n\n\n# For public/ directory\nvisibility: public\n\n# For private/ directory  \nvisibility: private\n\n\n\nimport yaml\nfrom pathlib import Path\nfrom typing import Optional\n\ndef parse_frontmatter(file_path: Path) -&gt; dict:\n    \"\"\"Parse YAML frontmatter from .qmd file.\"\"\"\n    content = file_path.read_text()\n    \n    if content.startswith('---'):\n        parts = content.split('---', 2)\n        if len(parts) &gt;= 3:\n            frontmatter = yaml.safe_load(parts[1])\n            return frontmatter or {}\n    \n    return {}\n\ndef get_file_visibility(file_path: Path, dir_default: str = 'public') -&gt; str:\n    \"\"\"Get visibility for a file, considering frontmatter and directory default.\"\"\"\n    meta = parse_frontmatter(file_path)\n    \n    # File-level override\n    if 'visibility' in meta:\n        return meta['visibility']\n    \n    # Use directory default\n    return dir_default\n\n\n\nApproach: Modify GitHub Actions workflow to run filter-wiki.py before quarto render\n# In publish.yml, before quarto render step:\n- name: Filter wiki files\n  run: |\n    python scripts/filter-wiki.py wiki/ --output wiki/public-files.txt\n    # Generate list of files to process\n\n- name: Render and Publish\n  uses: quarto-dev/quarto-actions/publish@v2\n  with:\n    target: gh-pages\n  env:\n    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\nAlternative Approach (simpler): Pre-delete private files before render, restore after\n- name: Filter wiki (pre-render)\n  run: |\n    python scripts/filter-wiki.py wiki/ --output /tmp/public-files.txt\n    mkdir -p /tmp/wiki-filtered\n    # Copy only public files to temporary location\n    # Render from temporary location\n\n\n\n\n\n\n\n\n\nFile\nPurpose\n\n\n\n\nwiki/index.qmd\nWiki home page\n\n\nwiki/public/_metadata.yml\nPublic directory defaults\n\n\nwiki/private/_metadata.yml\nPrivate directory defaults\n\n\nscripts/filter-wiki.py\nMain filter script\n\n\ntests/test_filter_wiki.py\nUnit tests\n\n\n\n\n\n\n\n\n\nFile\nChange\n\n\n\n\n.github/workflows/publish.yml\nAdd filter step before render\n\n\n.gitignore\nEnsure private content excluded\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nScenario\nBehavior\n\n\n\n\nMalformed YAML frontmatter\nLog warning, skip file (treat as directory default)\n\n\nMissing visibility field\nUse _metadata.yml default, or ‘public’ if no default\n\n\nFile not found\nLog error, continue with other files\n\n\nEmpty wiki directory\nOutput empty list, no error\n\n\n\n\n\n\n\n\ndef test_parse_public_file():\n    # Given: .qmd file with visibility: public\n    # When: scan_wiki() is called\n    # Then: file is included in output\n\ndef test_parse_private_file():\n    # Given: .qmd file with visibility: private\n    # When: scan_wiki() is called\n    # Then: file is NOT included in output\n\ndef test_directory_default_private():\n    # Given: file in private/ with no frontmatter\n    # When: scan_wiki() is called\n    # Then: file is NOT included in output\n\ndef test_file_override_directory():\n    # Given: file with visibility: public in private/ directory\n    # When: scan_wiki() is called\n    # Then: file IS included in output\n\n\n\n\nCI build produces docs/ without private files\nGitHub Pages URL returns 404 for private pages\nWiki index page links are all accessible"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html#design-decisions",
+    "href": "openspec/changes/nacayu-wiki-001/design.html#design-decisions",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "Decision: Use YAML frontmatter visibility field instead of file naming conventions\nAlternatives Considered: - File naming (e.g., _private-*.qmd) - Less explicit, harder to manage - Directory-based - Requires moving files to change visibility - Database/config file - Additional file to maintain\nSelected: Frontmatter-based\nRationale: - LLM-friendly (easy to read/write) - Single source of truth in each file - Directory structure reflects content organization, not access control - Extensible (can add more metadata later)\n\n\n\nDecision: Pure Python implementation (no external dependencies except pyyaml)\nRationale: - Simple, single-file solution - Minimal dependencies (just pyyaml) - Easy to understand and maintain - Can be extended if needed\n\n\n\nDecision: Support directory-level defaults via _metadata.yml\nRationale: - Standard Quarto/_obsidian pattern - Easy bulk setting (all files in directory inherit default) - File-level override when needed - No surprises for content authors"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html#detailed-design",
+    "href": "openspec/changes/nacayu-wiki-001/design.html#detailed-design",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "#!/usr/bin/env python3\n\"\"\"Filter wiki files based on visibility frontmatter.\"\"\"\n\nimport argparse\nfrom pathlib import Path\nfrom typing import List\n\ndef parse_args() -&gt; argparse.Namespace:\n    parser = argparse.ArgumentParser(description='Filter wiki files by visibility')\n    parser.add_argument('wiki_dir', type=Path, help='Wiki directory path')\n    parser.add_argument('--output', type=Path, help='Output file for file list')\n    return parser.parse_args()\n\ndef scan_wiki(wiki_dir: Path) -&gt; List[Path]:\n    \"\"\"Scan wiki directory and return list of public files.\"\"\"\n    ...\n\ndef main():\n    args = parse_args()\n    public_files = scan_wiki(args.wiki_dir)\n    if args.output:\n        args.output.write_text('\\n'.join(str(f) for f in public_files))\n    else:\n        for f in public_files:\n            print(f)\n\nif __name__ == '__main__':\n    main()\n\n\n\n# For public/ directory\nvisibility: public\n\n# For private/ directory  \nvisibility: private\n\n\n\nimport yaml\nfrom pathlib import Path\nfrom typing import Optional\n\ndef parse_frontmatter(file_path: Path) -&gt; dict:\n    \"\"\"Parse YAML frontmatter from .qmd file.\"\"\"\n    content = file_path.read_text()\n    \n    if content.startswith('---'):\n        parts = content.split('---', 2)\n        if len(parts) &gt;= 3:\n            frontmatter = yaml.safe_load(parts[1])\n            return frontmatter or {}\n    \n    return {}\n\ndef get_file_visibility(file_path: Path, dir_default: str = 'public') -&gt; str:\n    \"\"\"Get visibility for a file, considering frontmatter and directory default.\"\"\"\n    meta = parse_frontmatter(file_path)\n    \n    # File-level override\n    if 'visibility' in meta:\n        return meta['visibility']\n    \n    # Use directory default\n    return dir_default\n\n\n\nApproach: Modify GitHub Actions workflow to run filter-wiki.py before quarto render\n# In publish.yml, before quarto render step:\n- name: Filter wiki files\n  run: |\n    python scripts/filter-wiki.py wiki/ --output wiki/public-files.txt\n    # Generate list of files to process\n\n- name: Render and Publish\n  uses: quarto-dev/quarto-actions/publish@v2\n  with:\n    target: gh-pages\n  env:\n    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}\nAlternative Approach (simpler): Pre-delete private files before render, restore after\n- name: Filter wiki (pre-render)\n  run: |\n    python scripts/filter-wiki.py wiki/ --output /tmp/public-files.txt\n    mkdir -p /tmp/wiki-filtered\n    # Copy only public files to temporary location\n    # Render from temporary location"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html#file-structure",
+    "href": "openspec/changes/nacayu-wiki-001/design.html#file-structure",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "File\nPurpose\n\n\n\n\nwiki/index.qmd\nWiki home page\n\n\nwiki/public/_metadata.yml\nPublic directory defaults\n\n\nwiki/private/_metadata.yml\nPrivate directory defaults\n\n\nscripts/filter-wiki.py\nMain filter script\n\n\ntests/test_filter_wiki.py\nUnit tests\n\n\n\n\n\n\n\n\n\nFile\nChange\n\n\n\n\n.github/workflows/publish.yml\nAdd filter step before render\n\n\n.gitignore\nEnsure private content excluded"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html#error-handling",
+    "href": "openspec/changes/nacayu-wiki-001/design.html#error-handling",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "Scenario\nBehavior\n\n\n\n\nMalformed YAML frontmatter\nLog warning, skip file (treat as directory default)\n\n\nMissing visibility field\nUse _metadata.yml default, or ‘public’ if no default\n\n\nFile not found\nLog error, continue with other files\n\n\nEmpty wiki directory\nOutput empty list, no error"
+  },
+  {
+    "objectID": "openspec/changes/nacayu-wiki-001/design.html#testing-strategy",
+    "href": "openspec/changes/nacayu-wiki-001/design.html#testing-strategy",
+    "title": "nacayu-wiki-001 Design",
+    "section": "",
+    "text": "def test_parse_public_file():\n    # Given: .qmd file with visibility: public\n    # When: scan_wiki() is called\n    # Then: file is included in output\n\ndef test_parse_private_file():\n    # Given: .qmd file with visibility: private\n    # When: scan_wiki() is called\n    # Then: file is NOT included in output\n\ndef test_directory_default_private():\n    # Given: file in private/ with no frontmatter\n    # When: scan_wiki() is called\n    # Then: file is NOT included in output\n\ndef test_file_override_directory():\n    # Given: file with visibility: public in private/ directory\n    # When: scan_wiki() is called\n    # Then: file IS included in output\n\n\n\n\nCI build produces docs/ without private files\nGitHub Pages URL returns 404 for private pages\nWiki index page links are all accessible"
   }
 ]
