@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "blog/index.html",
+    "href": "blog/index.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Blog Posts\nHere will be my learning notes and thoughts.\nComing soon…"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About Me",
+    "section": "",
+    "text": "Zedong Yu (于泽东)\n\n📍 Shanghai\n💼 AD perception → AD World model & LLM agents & VLM\n🔗 GitHub\n📧 Email: your.email@example.com\n\n\n\nI am a researcher focused on Autonomous Driving perception, now transitioning to:\n\nAD World Model\nLLM Agents\nVision Language Models (VLM)"
+  },
+  {
+    "objectID": "about.html#background",
+    "href": "about.html#background",
+    "title": "About Me",
+    "section": "",
+    "text": "I am a researcher focused on Autonomous Driving perception, now transitioning to:\n\nAD World Model\nLLM Agents\nVision Language Models (VLM)"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Zedong Yu",
+    "section": "",
+    "text": "Zedong Yu (于泽东)\n\n📍 Shanghai\n💼 AD perception → AD World model & LLM agents & VLM\n🔗 GitHub\n📧 Email: your.email@example.com\n\n\n\nI am a researcher focused on Autonomous Driving perception, now transitioning to:\n\nAD World Model\nLLM Agents\nVision Language Models (VLM)\n\n\n\n\n\nBlog"
+  },
+  {
+    "objectID": "index.html#background",
+    "href": "index.html#background",
+    "title": "Zedong Yu",
+    "section": "",
+    "text": "I am a researcher focused on Autonomous Driving perception, now transitioning to:\n\nAD World Model\nLLM Agents\nVision Language Models (VLM)"
+  },
+  {
+    "objectID": "index.html#recent-posts",
+    "href": "index.html#recent-posts",
+    "title": "Zedong Yu",
+    "section": "",
+    "text": "Blog"
+  },
+  {
+    "objectID": "cv.html",
+    "href": "cv.html",
+    "title": "CV",
+    "section": "",
+    "text": "📍 Shanghai | 📧 your.email@example.com | 🔗 GitHub\n\n\n\n\nComing soon…\n\n\n\n\nComing soon…\n\n\n\n\nComing soon…"
+  },
+  {
+    "objectID": "cv.html#zedong-yu-于泽东",
+    "href": "cv.html#zedong-yu-于泽东",
+    "title": "CV",
+    "section": "",
+    "text": "📍 Shanghai | 📧 your.email@example.com | 🔗 GitHub"
+  },
+  {
+    "objectID": "cv.html#education",
+    "href": "cv.html#education",
+    "title": "CV",
+    "section": "",
+    "text": "Coming soon…"
+  },
+  {
+    "objectID": "cv.html#experience",
+    "href": "cv.html#experience",
+    "title": "CV",
+    "section": "",
+    "text": "Coming soon…"
+  },
+  {
+    "objectID": "cv.html#publications",
+    "href": "cv.html#publications",
+    "title": "CV",
+    "section": "",
+    "text": "Coming soon…"
+  }
+]
