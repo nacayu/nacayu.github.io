@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>设计评审报告 - nacayu-wiki 个人知识管理系统</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0f172a; color: #e2e8f0; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+
+/* Cover */
+.cover { text-align: center; padding: 4rem 2rem; background: linear-gradient(135deg, #1e293b 0%, #334155 100%); border-radius: 16px; margin-bottom: 2rem; }
+.cover h1 { font-size: 2.5rem; color: #f8fafc; margin-bottom: 0.5rem; }
+.cover .subtitle { font-size: 1.25rem; color: #94a3b8; margin-bottom: 2rem; }
+.cover .meta { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; font-size: 0.9rem; color: #64748b; }
+.cover .badge { display: inline-block; padding: 0.5rem 1rem; border-radius: 20px; font-weight: 600; }
+.badge-approved { background: #166534; color: #bbf7d0; }
+.badge-review { background: #854d0e; color: #fef08a; }
+
+/* Dashboard */
+.dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.metric-card { background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; }
+.metric-card .label { font-size: 0.85rem; color: #64748b; margin-bottom: 0.5rem; }
+.metric-card .value { font-size: 2rem; font-weight: 700; }
+.metric-card .value.green { color: #4ade80; }
+.metric-card .value.yellow { color: #facc15; }
+.metric-card .value.red { color: #f87171; }
+
+/* Section */
+.section { background: #1e293b; border-radius: 12px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid #334155; }
+.section h2 { font-size: 1.25rem; color: #f8fafc; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid #3b82f6; }
+.section h3 { font-size: 1rem; color: #94a3b8; margin: 1.5rem 0 0.75rem; }
+
+/* Architecture Diagram */
+.architecture { background: #0f172a; border-radius: 8px; padding: 1.5rem; margin: 1rem 0; }
+.arch-layer { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+.arch-box { flex: 1; min-width: 200px; background: #1e293b; border-radius: 8px; padding: 1rem; border-left: 4px solid; }
+.arch-box.public { border-color: #4ade80; }
+.arch-box.private { border-color: #f87171; }
+.arch-box h4 { font-size: 0.9rem; margin-bottom: 0.5rem; }
+.arch-box p { font-size: 0.8rem; color: #64748b; }
+.arch-box .status { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; margin-top: 0.5rem; }
+.status-yes { background: #166534; color: #bbf7d0; }
+.status-no { background: #991b1b; color: #fecaca; }
+
+/* Directory Structure */
+.dirs { background: #0f172a; border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.85rem; }
+.dirs .file { padding: 0.25rem 0; }
+.dirs .file.public { color: #4ade80; }
+.dirs .file.private { color: #f87171; }
+.dirs .file.meta { color: #60a5fa; }
+.dirs .indent { margin-left: 1.5rem; border-left: 2px solid #334155; padding-left: 0.5rem; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; }
+th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #334155; }
+th { background: #0f172a; color: #94a3b8; font-weight: 600; font-size: 0.85rem; }
+tr:hover { background: #334155; }
+
+/* Badges */
+.badge-p0 { background: #dc2626; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+.badge-p1 { background: #ea580c; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+.badge-p2 { background: #ca8a04; color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+.badge-done { background: #166534; color: #bbf7d0; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+.badge-pending { background: #854d0e; color: #fef08a; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; }
+
+/* Risk Table */
+.risk-table td:nth-child(1) { width: 60px; text-align: center; }
+.risk-table td:nth-child(2) { width: 80px; }
+.risk-table td:nth-child(4) { max-width: 300px; }
+
+/* Roadmap */
+.roadmap { display: flex; gap: 1rem; flex-wrap: wrap; }
+.roadmap-phase { flex: 1; min-width: 250px; background: #0f172a; border-radius: 8px; padding: 1rem; }
+.roadmap-phase h4 { color: #3b82f6; margin-bottom: 0.75rem; font-size: 0.9rem; }
+.roadmap-phase ul { list-style: none; }
+.roadmap-phase li { padding: 0.25rem 0; font-size: 0.85rem; color: #94a3b8; }
+.roadmap-phase li::before { content: "•"; color: #4ade80; margin-right: 0.5rem; }
+
+/* Code Block */
+.code-block { background: #0f172a; border-radius: 8px; padding: 1rem; font-family: 'Monaco', 'Menlo', monospace; font-size: 0.8rem; overflow-x: auto; }
+.code-block .comment { color: #64748b; }
+.code-block .key { color: #60a5fa; }
+.code-block .value { color: #4ade80; }
+
+/* Footer */
+.footer { text-align: center; padding: 2rem; color: #64748b; font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Cover -->
+<div class="cover">
+  <h1>nacayu-wiki</h1>
+  <p class="subtitle">嵌入式个人知识管理系统设计评审</p>
+  <div class="meta">
+    <span class="badge badge-approved">设计已确认</span>
+    <span>•</span>
+    <span>日期: 2026-05-20</span>
+    <span>•</span>
+    <span>版本: v1.0</span>
+  </div>
+</div>
+
+<!-- Executive Dashboard -->
+<div class="dashboard">
+  <div class="metric-card">
+    <div class="label">架构完整性</div>
+    <div class="value green">85%</div>
+    <div class="desc">核心组件已设计</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">风险等级</div>
+    <div class="value yellow">P1</div>
+    <div class="desc">需关注过滤验证</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">实施难度</div>
+    <div class="value green">中</div>
+    <div class="desc">Python + Quarto</div>
+  </div>
+  <div class="metric-card">
+    <div class="label">预计工时</div>
+    <div class="value">2-3天</div>
+    <div class="desc">含测试验证</div>
+  </div>
+</div>
+
+<!-- 1. Project Positioning -->
+<div class="section">
+  <h2>1. 项目定位与系统边界</h2>
+  <table>
+    <tr><th>维度</th><th>内容</th></tr>
+    <tr><td>系统名称</td><td>nacayu-wiki - 嵌入式个人知识管理系统</td></tr>
+    <tr><td>核心功能</td><td>GitHub Pages 内嵌 Wiki，支持公开/私人内容混合管理</td></tr>
+    <tr><td>目标用户</td><td>外部访客（公开内容）、自己（完整内容）</td></tr>
+    <tr><td>报告目的</td><td>系统架构设计与实施评审</td></tr>
+    <tr><td>决策支持</td><td>是否采纳此架构，如何实施</td></tr>
+  </table>
+</div>
+
+<!-- 2. Architecture -->
+<div class="section">
+  <h2>2. 系统架构</h2>
+  
+  <h3>2.1 系统边界图</h3>
+  <div class="architecture">
+    <div style="text-align:center;margin-bottom:1rem;">
+      <strong>nacayu.github.io</strong>
+    </div>
+    <div class="arch-layer">
+      <div class="arch-box public">
+        <h4>Public Pages</h4>
+        <p>首页 / 关于 / 简历 / 博客</p>
+        <span class="status status-yes">✅ 公开访问</span>
+      </div>
+      <div class="arch-box public">
+        <h4>Public Wiki</h4>
+        <p>公开知识文章</p>
+        <span class="status status-yes">✅ GitHub Pages 可访问</span>
+      </div>
+      <div class="arch-box private">
+        <h4>Private Wiki</h4>
+        <p>私人笔记/草稿</p>
+        <span class="status status-no">❌ GitHub Pages 不可见</span>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:0.8rem;color:#64748b;">
+      本地环境: 完整内容 | CI 环境: 仅公开内容
+    </div>
+  </div>
+
+  <h3>2.2 目录结构</h3>
+  <div class="dirs">
+    <div class="file public">nacayu.github.io/</div>
+    <div class="file public indent">├── _quarto.yml</div>
+    <div class="file public indent">├── index.qmd, about.qmd, cv.qmd</div>
+    <div class="file public indent">├── blog/</div>
+    <div class="file public indent">├── wiki/</div>
+    <div class="file public indent">│   ├── index.qmd          <span class="comment"># Wiki 索引页</span></div>
+    <div class="file public indent">│   ├── public/           <span class="comment"># 公开内容</span></div>
+    <div class="file meta indent">│   │   └── _metadata.yml  <span class="comment"># default: visibility: public</span></div>
+    <div class="file public indent">│   └── private/          <span class="comment"># 私人内容</span></div>
+    <div class="file meta indent">│       └── _metadata.yml  <span class="comment"># default: visibility: private</span></div>
+    <div class="file meta indent">├── scripts/</div>
+    <div class="file meta indent">│   └── filter-wiki.py   <span class="comment"># 过滤脚本</span></div>
+    <div class="file public indent">└── .github/workflows/</div>
+    <div class="file meta indent">    └── publish.yml        <span class="comment"># CI/CD</span></div>
+  </div>
+
+  <h3>2.3 Frontmatter 格式</h3>
+  <div class="code-block">
+<span class="key">---</span>
+<span class="key">title</span>: <span class="value">"Transformer Attention Mechanism"</span>
+<span class="key">date</span>: <span class="value">2025-05-20</span>
+<span class="key">visibility</span>: <span class="value">public</span>  <span class="comment"># public | private</span>
+<span class="key">tags</span>: <span class="value">[LLM, Architecture]</span>
+<span class="key">summary</span>: <span class="value">"理解 Transformer 中 attention 的工作原理"</span>
+<span class="key">---</span>
+  </div>
+</div>
+
+<!-- 3. Components -->
+<div class="section">
+  <h2>3. 核心组件状态</h2>
+  <table>
+    <tr>
+      <th>组件</th>
+      <th>状态</th>
+      <th>说明</th>
+    </tr>
+    <tr>
+      <td>GitHub Pages 网站</td>
+      <td><span class="badge-done">已完成</span></td>
+      <td>基础框架已部署</td>
+    </tr>
+    <tr>
+      <td>Wiki 目录结构</td>
+      <td><span class="badge-done">已设计</span></td>
+      <td>public/private 分离</td>
+    </tr>
+    <tr>
+      <td>filter-wiki.py</td>
+      <td><span class="badge-pending">待实现</span></td>
+      <td>Python 过滤脚本</td>
+    </tr>
+    <tr>
+      <td>GitHub Actions CI</td>
+      <td><span class="badge-pending">待实现</span></td>
+      <td>过滤 → 渲染 → 发布</td>
+    </tr>
+    <tr>
+      <td>Wiki 首页/索引</td>
+      <td><span class="badge-pending">待实现</span></td>
+      <td>展示公开 wiki 内容</td>
+    </tr>
+    <tr>
+      <td>_metadata.yml 配置</td>
+      <td><span class="badge-pending">待实现</span></td>
+      <td>目录级默认 visibility</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 4. Capability Matrix -->
+<div class="section">
+  <h2>4. 能力矩阵</h2>
+  <table>
+    <tr>
+      <th>能力</th>
+      <th>状态</th>
+      <th>说明</th>
+    </tr>
+    <tr>
+      <td>公开内容展示</td>
+      <td><span class="badge-done">已完成</span></td>
+      <td>GitHub Pages 渲染 public/</td>
+    </tr>
+    <tr>
+      <td>私人内容本地访问</td>
+      <td><span class="badge-done">已设计</span></td>
+      <td>本地完整内容</td>
+    </tr>
+    <tr>
+      <td>自动过滤</td>
+      <td><span class="badge-pending">待实现</span></td>
+      <td>Python 脚本 + CI</td>
+    </tr>
+    <tr>
+      <td>Wiki 搜索</td>
+      <td><span class="badge-pending">待规划</span></td>
+      <td>可选：qmd 搜索</td>
+    </tr>
+    <tr>
+      <td>知识图谱</td>
+      <td><span class="badge-pending">待规划</span></td>
+      <td>Obsidian 图谱查看</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 5. Risk Board -->
+<div class="section">
+  <h2>5. 风险看板</h2>
+  <table class="risk-table">
+    <tr>
+      <th>ID</th>
+      <th>级别</th>
+      <th>风险</th>
+      <th>缓解措施</th>
+    </tr>
+    <tr>
+      <td><span class="badge-p1">P1</span></td>
+      <td>隐私</td>
+      <td>私人内容误推送至 GitHub Pages</td>
+      <td>CI 过滤脚本 + 验证测试</td>
+    </tr>
+    <tr>
+      <td><span class="badge-p2">P2</span></td>
+      <td>维护</td>
+      <td>Wiki 内容膨胀难以管理</td>
+      <td>定期 lint + 归档策略</td>
+    </tr>
+    <tr>
+      <td><span class="badge-p2">P2</span></td>
+      <td>质量</td>
+      <td>LLM 生成知识存在错误</td>
+      <td>人工审核机制</td>
+    </tr>
+  </table>
+</div>
+
+<!-- 6. Roadmap -->
+<div class="section">
+  <h2>6. 实施路线图</h2>
+  <div class="roadmap">
+    <div class="roadmap-phase">
+      <h4>Phase 1: 核心架构</h4>
+      <ul>
+        <li>创建 wiki/ 目录结构</li>
+        <li>编写 _metadata.yml 配置</li>
+        <li>实现 filter-wiki.py 脚本</li>
+      </ul>
+    </div>
+    <div class="roadmap-phase">
+      <h4>Phase 2: CI/CD</h4>
+      <ul>
+        <li>修改 GitHub Actions workflow</li>
+        <li>添加过滤步骤</li>
+        <li>测试公开/私人分离</li>
+      </ul>
+    </div>
+    <div class="roadmap-phase">
+      <h4>Phase 3: 内容填充</h4>
+      <ul>
+        <li>创建 Wiki 索引页</li>
+        <li>迁移/创建 wiki 内容</li>
+        <li>Obsidian 图谱集成</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 7. Verification Matrix -->
+<div class="section">
+  <h2>7. 验证矩阵</h2>
+  <table>
+    <tr>
+      <th>验证项</th>
+      <th>方法</th>
+      <th>状态</th>
+    </tr>
+    <tr>
+      <td>filter-wiki.py 正确过滤 private 内容</td>
+      <td>单元测试</td>
+      <td><span class="badge-pending">待验证</span></td>
+    </tr>
+    <tr>
+      <td>CI 生成的 docs/ 不含 private 页面</td>
+      <td>集成测试</td>
+      <td><span class="badge-pending">待验证</span></td>
+    </tr>
+    <tr>
+      <td>本地 wiki/ 包含完整内容</td>
+      <td>人工检查</td>
+      <td><span class="badge-pending">待验证</span></td>
+    </tr>
+    <tr>
+      <td>GitHub Pages 仅显示公开内容</td>
+      <td>浏览器访问测试</td>
+      <td><span class="badge-pending">待验证</span></td>
+    </tr>
+  </table>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p>设计评审报告 | nacayu-wiki | 2026-05-20</p>
+  <p>基于 Karpathy LLM Wiki 理念 + Quarto + GitHub Pages</p>
+</div>
+
+</div>
+</body>
+</html>
