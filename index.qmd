@@ -2,18 +2,17 @@
 title: "Zedong Yu"
 ---
 
-# About Me
+# Zedong Yu
 
 **Zedong Yu (于泽东)**
 
 - 📍 Shanghai
 - 💼 AD perception → AD World model & LLM agents & VLM
 - 🔗 [GitHub](https://github.com/nacayu)
-- 📧 Email: your.email@example.com
 
-## Background
+## Focus
 
-I am a researcher focused on Autonomous Driving perception, now transitioning to:
+Research and engineering interests:
 
 - AD World Model
 - LLM Agents
@@ -21,4 +20,4 @@ I am a researcher focused on Autonomous Driving perception, now transitioning to
 
 ## Recent Posts
 
-- [Blog](../blog/index.qmd)
+See the [blog](blog/index.qmd) for learning notes and research thoughts.

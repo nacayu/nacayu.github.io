@@ -11,28 +11,9 @@ https://nacayu.github.io
 - GitHub account
 - Git installed locally
 
-### Initial Setup (Already Done)
-1. Created Quarto project structure
-2. Created GitHub Actions workflow for auto-deployment
+### Current Setup
 
-### Next Steps - Push to GitHub
-
-Run these commands on your local machine:
-
-```bash
-# Clone the repository
-git clone https://github.com/nacayu/nacayu.github.io.git
-cd nacayu.github.io
-
-# Add all files
-git add .
-
-# Commit
-git commit -m "Initial commit"
-
-# Push to main branch
-git push origin main
-```
+The `master` branch is the source branch. GitHub Actions renders the Quarto site and publishes it to `gh-pages` after every push to `master`.
 
 ### Enable GitHub Pages
 1. Go to repository **Settings → Pages**

@@ -5,7 +5,12 @@ project:
 website:
   title: "Zedong Yu"
   description: "Personal website"
+  site-url: https://nacayu.github.io
+  repo-url: https://github.com/nacayu/nacayu.github.io
   navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
     right:
       - text: "About"
         href: about.qmd

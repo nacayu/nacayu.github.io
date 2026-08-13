@@ -4,6 +4,6 @@ title: "Blog"
 
 # Blog Posts
 
-Here will be my learning notes and thoughts.
+Learning notes and research thoughts on autonomous driving, radar perception, world models, and multimodal agents.
 
-*Coming soon...*
+New posts will be added here as they are published.

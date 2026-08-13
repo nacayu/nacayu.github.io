@@ -9,7 +9,6 @@ title: "About Me"
 - 📍 Shanghai
 - 💼 AD perception → AD World model & LLM agents & VLM
 - 🔗 [GitHub](https://github.com/nacayu)
-- 📧 Email: your.email@example.com
 
 ## Background
 
